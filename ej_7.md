@@ -1,7 +1,9 @@
 # Ejercicio 7: Caso integrador — modelado de un e-commerce
 
 ## 1. Un documento de ejemplo válido
+
 **Colección Usuarios**
+
 ```json
 {
   "_id": "USR-001",
@@ -14,7 +16,9 @@
   }
 }
 ```
+
 **Colección Productos**
+
 ```json
 {
   "_id": "PROD-102",
@@ -24,7 +28,9 @@
   "stock": 15
 }
 ```
+
 **Colección Pedidos**
+
 ```json
 {
   "_id": "PED-8832",
@@ -44,12 +50,14 @@
 ```
 
 ## 2. Justificación de Relaciones
+
 **Relación Pedido-Usuario (Referenciada)**
-    Se utilizó el modelo referenciado guardando únicamente el usuarioId en el pedido. Esto se debe a que la entidad usuario es compartida por muchos pedidos (evita la duplicación de datos) y su información se actualiza de forma independiente (por ejemplo, si el usuario cambia su contraseña o email).
+Se utilizó el modelo referenciado guardando únicamente el usuarioId en el pedido. Esto se debe a que la entidad usuario es compartida por muchos pedidos (evita la duplicación de datos) y su información se actualiza de forma independiente (por ejemplo, si el usuario cambia su contraseña o email).
 **Relación Pedido-Producto (Híbrida / Embebida)**
-    Se utilzó un modelo embebido para los ítems dentro del pedido. Aunque el producto existe en su propia colección, en el pedido se embebe una "captura" de los datos clave (nombre y precio) al momento de la compra. Esta es una relación de composición fuerte: los datos embebidos se consultan junto con el pedido principal. Además, garantiza que si el precio del producto cambia en la base de datos en el futuro, el total de ese pedido histórico no se vea afectado.
+Se utilzó un modelo embebido para los ítems dentro del pedido. Aunque el producto existe en su propia colección, en el pedido se embebe una "captura" de los datos clave (nombre y precio) al momento de la compra. Esta es una relación de composición fuerte: los datos embebidos se consultan junto con el pedido principal. Además, garantiza que si el precio del producto cambia en la base de datos en el futuro, el total de ese pedido histórico no se vea afectado.
 
 ## 3. JSON Schema
+
 ```json
 {
   "$schema": "[http://json-schema.org/draft-07/schema#](http://json-schema.org/draft-07/schema#)",
@@ -57,20 +65,20 @@
   "type": "object",
   "required": ["nombre", "categoria", "precio"],
   "properties": {
-    "nombre": { 
+    "nombre": {
       "type": "string",
       "minLength": 3
     },
-    "categoria": { 
-      "type": "string" 
+    "categoria": {
+      "type": "string"
     },
-    "precio": { 
-      "type": "number", 
-      "minimum": 0 
+    "precio": {
+      "type": "number",
+      "minimum": 0
     },
-    "stock": { 
-      "type": "integer", 
-      "minimum": 0 
+    "stock": {
+      "type": "integer",
+      "minimum": 0
     }
   },
   "additionalProperties": false
